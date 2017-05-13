@@ -6,6 +6,8 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.along.practice.utils.SpUtil;
+
 /**
  * Created by longj on 2017/5/13.
  */
@@ -23,6 +25,8 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = MainApplication.this;
+
+        SpUtil.init(this);
         getScreenSize();
 
     }

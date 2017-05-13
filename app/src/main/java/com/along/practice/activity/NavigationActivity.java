@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.along.practice.R;
+import com.along.practice.utils.ToastUtils;
 
 import butterknife.ButterKnife;
 
@@ -102,7 +103,7 @@ public class NavigationActivity extends AppCompatActivity {
             if (mIsExitApp){
                 this.finish();
             }else {
-                Toast.makeText(this, getString(R.string.toast_double_click_exit), Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast(this,getString(R.string.toast_double_click_exit));
                 mIsExitApp = true;
                 new Handler().postDelayed(new Runnable() {
                     @Override

@@ -14,9 +14,18 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+
         release {
+            // 调用方式为：BuildConfig.DEBUG_LOG
+            buildConfigField "boolean", "DEBUG_LOG", "false"
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "DEBUG_LOG", "true"
         }
     }
 }
