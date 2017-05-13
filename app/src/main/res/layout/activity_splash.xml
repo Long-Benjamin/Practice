@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.along.practice.activity.SplashActivity">
 
-    <ImageView
+    <com.qiushui.blurredview.BlurredView
         android:id="@+id/splash_imgview"
+        app:disableBlurred="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="8dp" />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/copy_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="Copyright © 2017-2020 All Rights reserved \n longjintang123@163.com"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>
