@@ -1,13 +1,11 @@
 package com.along.practice.Manager;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 
-import com.along.practice.activity.NavigationActivity;
+import com.along.practice.activity.MainActivity;
 
-import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -28,7 +26,7 @@ public class ActivitiesManager   {
         return activitiesManager;
     }
 
-    public void addActivities(Activity activity){
+    public void addActivity(Activity activity){
         if (activities == null){
             activities = new Stack<Activity>();
         }
@@ -77,8 +75,8 @@ public class ActivitiesManager   {
     public void AppExit(Context context) {
 
         finishAllActivity();
-        Intent intent = new Intent(context, NavigationActivity.class);
-        intent.putExtra(NavigationActivity.TAG_EXIT, true);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MainActivity.TAG_EXIT, true);
         context.startActivity(intent);
 
         /*try {

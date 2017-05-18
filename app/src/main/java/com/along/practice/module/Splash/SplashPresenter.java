@@ -1,24 +1,26 @@
-package com.along.practice.activity;
+package com.along.practice.module.Splash;
 
-import android.content.Intent;
-import android.content.res.Resources;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
-import android.widget.ImageView;
-import android.support.v8.renderscript.*;
+
 import com.along.practice.R;
-import com.qiushui.blurredview.BlurredView;
 
 import java.util.Random;
 
-public class SplashActivity extends AppCompatActivity {
+/**
+ * Created by longj on 2017/5/14.
+ * E-mail: longjintang123@163.com
+ */
+
+public class SplashPresenter {
 
     static final int[] mPictrues = {R.drawable.timg1,R.drawable.timg2,R.drawable.timg3,R.drawable.timg4};
-    private BlurredView mImgView;
+
+    Context mCtx;
+    ISplashView mSplashView;
     private int mLevel = 0;
 
     private Handler mHandler = new Handler(){
@@ -29,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
                 case 0:
                     if (mLevel < 0)mLevel = 0;
                     if (mLevel > 85)mLevel = 85;
-                    mImgView.setBlurredLevel(mLevel);
+                    mSplashView.setImageAlpha(mLevel);
                     mLevel += 1;
                     mHandler.sendEmptyMessageDelayed(0,15);
                     break;
@@ -39,22 +41,24 @@ public class SplashActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-
-        initView();
-
+    public SplashPresenter(ISplashView pSplashView, Context pCtx){
+        this.mSplashView = pSplashView;
+        this.mCtx = pCtx;
     }
 
-    private void initView() {
-        mImgView = (BlurredView) findViewById(R.id.splash_imgview);
+    public void setCopyrightText(String str){
+
+        mSplashView.setCopyrightText(str);
+    }
+
+    public void showImage(){
 
         Random random = new Random();
         int vId = random.nextInt(4)%(4);
-        mImgView.setBlurredImg(getResources().getDrawable(mPictrues[vId]));
+        mSplashView.showImage(mCtx.getResources().getDrawable(mPictrues[vId]));
+    }
 
+    public void setImageAnimation(){
         ScaleAnimation scaleAnim = new ScaleAnimation(1.0f, 1.2f, 1.0f, 1.2f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
         );
@@ -72,7 +76,7 @@ public class SplashActivity extends AppCompatActivity {
                 //在这里做一些初始化的操作
                 //跳转到指定的Activity
                 mHandler.removeMessages(0);
-                startActivity();
+                mSplashView.toMainActivity();
             }
 
 
@@ -80,17 +84,8 @@ public class SplashActivity extends AppCompatActivity {
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        mImgView.startAnimation(scaleAnim);
-
+        mSplashView.setImageAnimation(scaleAnim);
     }
-
-    private void startActivity() {
-        Intent intent = new Intent(SplashActivity.this, NavigationActivity.class);
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        finish();
-    }
-
 
 
 }
