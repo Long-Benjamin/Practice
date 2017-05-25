@@ -14,24 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--<activity-->
-            <!--android:name=".module.Splash.SplashActivity"-->
-            <!--android:theme="@style/splash_Theme">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity> -->
-
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".module.Splash.SplashActivity"
+            android:theme="@style/splash_Theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.NomalActivity"></activity>
+        <activity android:name=".activity.MainActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name=".activity.NomalActivity"
+            android:theme="@style/Transparent_statuebar_Theme"/>
 
     </application>
 

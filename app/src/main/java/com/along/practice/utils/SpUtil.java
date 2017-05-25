@@ -21,7 +21,7 @@ public class SpUtil {
 
     public static int getThemeIndex(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getInt("ThemeIndex", 9);
+        return prefs.getInt("ThemeIndex", 4);
     }
 
     public static void setThemeIndex(Context context, int index) {
@@ -36,7 +36,7 @@ public class SpUtil {
 
     public static void setNightModel(Context context, boolean nightModel) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putBoolean("pNightMode", nightModel).apply();
+        prefs.edit().putBoolean("pNightMode", nightModel).commit();
     }
 
     public static boolean getNoImageState() {

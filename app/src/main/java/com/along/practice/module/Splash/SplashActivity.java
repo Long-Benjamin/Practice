@@ -36,6 +36,11 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     }
 
     @Override
+    protected void initNavigationBar() {
+
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_splash;
     }

@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.along.practice.Manager.ActivitiesManager;
 import com.along.practice.utils.LogUtil;
+import com.along.practice.utils.SpUtil;
 import com.along.practice.utils.StatusBarUtil;
+import com.along.practice.utils.ThemeUtil;
 import com.along.practice.utils.ToastUtils;
 import com.along.practice.widget.swipbacklayout.SwipeBackActivity;
 import com.along.practice.widget.swipbacklayout.SwipeBackLayout;
@@ -32,16 +34,20 @@ public abstract class BaseActivity extends SwipeBackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TAG = getClass().getSimpleName();
+
         //设置状态栏透明
-        StatusBarUtil.setTransparent(this);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        StatusBarUtil.setTransparent(this);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         init(savedInstanceState);
 
         LogUtil.e(TAG,"onCreate()");
     }
 
     private void init(Bundle savedInstanceState) {
-        TAG = getClass().getSimpleName();
+        setTheme(ThemeUtil.themeArr[SpUtil.getThemeIndex(this)][
+                SpUtil.getNightModel(this) ? 1 : 0]);
 
         this.setContentView(this.getLayoutId());
         binder = ButterKnife.bind(this);
@@ -51,6 +57,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
         getSwipeBackLayout().setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 
         initView(savedInstanceState);
+
         mActivity = this;
         ActivitiesManager.getActivitiesManager().addActivity(this);
 
@@ -66,6 +73,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     protected abstract void initView(Bundle savedInstanceState);
+    protected abstract void initNavigationBar();
 
     protected abstract int getLayoutId();
 

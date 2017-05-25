@@ -1,6 +1,7 @@
 package com.along.practice.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.along.practice.R;
 import com.along.practice.module.base.BaseActivity;
+import com.along.practice.utils.StatusBarUtil;
 import com.along.zxinglibrary.utils.QRCodeUtil;
 import com.along.zxinglibrary.zxing.activity.CaptureActivity;
 
@@ -37,12 +39,21 @@ public class NomalActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
 
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.arrow_back_white);
+        toolbar.setNavigationOnClickListener(v -> {
+            this.finish();
+        });
 
         Bitmap bmp = BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher);
         imageView1.setImageBitmap(
                 QRCodeUtil.createQRImage("就是我",500,bmp));
         imageView2.setImageBitmap(
                 QRCodeUtil.createQRCodeBitmap("就是我",200,200));
+    }
+
+    @Override
+    protected void initNavigationBar() {
+
     }
 
     @Override

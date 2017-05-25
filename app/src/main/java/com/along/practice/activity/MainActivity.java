@@ -3,6 +3,7 @@ package com.along.practice.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.along.practice.R;
 import com.along.practice.module.base.BaseActivity;
+import com.along.practice.utils.SpUtil;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
@@ -25,6 +27,8 @@ public class MainActivity extends BaseActivity {
     public static final String TAG_EXIT = "Eixt_App";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -37,6 +41,19 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         setSupportActionBar(toolbar);
+        toolbar.setTitle("首页");
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (SpUtil.getNightModel(MainActivity.this)){
+                    SpUtil.setNightModel(mContext, false);
+                }else {
+                    SpUtil.setNightModel(mContext, true);
+                }
+                MainActivity.this.reload();
+            }
+        });
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new RecyclerView.Adapter<MyViewHolder>() {
@@ -71,25 +88,9 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void initNavigationBar() {
 
-    /**
-     * 获得状态栏的高度
-     *
-     * @param context
-     * @return px
-     */
-    public static int getStatusHeight(Context context) {
-
-        int statusHeight = -1;
-        try {
-            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
-            Object object = clazz.newInstance();
-            int height = Integer.parseInt(clazz.getField("status_bar_height").get(object).toString());
-            statusHeight = context.getResources().getDimensionPixelSize(height);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return statusHeight;
     }
 
 

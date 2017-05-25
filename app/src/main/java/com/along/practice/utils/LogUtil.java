@@ -1,14 +1,15 @@
 package com.along.practice.utils;
 
-import android.support.compat.BuildConfig;
 import android.util.Log;
+
+import com.along.practice.BuildConfig;
 
 /**
  * Created by hpw on 16/10/27.
  */
 
 public class LogUtil {
-    private static boolean isDebug = BuildConfig.DEBUG;
+    private static boolean isDebug = BuildConfig.DEBUG_LOG;
 
     static String mTag = "PRACTICE";
 

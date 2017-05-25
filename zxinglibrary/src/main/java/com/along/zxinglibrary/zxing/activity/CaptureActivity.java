@@ -88,7 +88,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         setContentView(R.layout.activity_scanner);
 
 
-        CameraManager.init(getApplication());
+        CameraManager.init(CaptureActivity.this);
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_content);
         back = (ImageView) findViewById(R.id.scanner_toolbar_back);
         back.setOnClickListener(new View.OnClickListener() {
