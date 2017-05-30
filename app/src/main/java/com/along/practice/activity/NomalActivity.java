@@ -19,6 +19,7 @@ import com.along.zxinglibrary.zxing.activity.CaptureActivity;
 
 import butterknife.BindView;
 
+import static com.along.zxinglibrary.zxing.activity.CaptureActivity.INTENT_EXTRA_KEY_QR_SCAN;
 import static com.along.zxinglibrary.zxing.activity.CaptureActivity.RESULT_CODE_QR_SCAN;
 
 public class NomalActivity extends BaseActivity {
@@ -82,7 +83,7 @@ public class NomalActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000 && resultCode == RESULT_CODE_QR_SCAN){
-            String code = data.getExtras().getString("qr_scan_result");
+            String code = data.getExtras().getString(INTENT_EXTRA_KEY_QR_SCAN);
             mTVcode.setText(code);
         }
     }

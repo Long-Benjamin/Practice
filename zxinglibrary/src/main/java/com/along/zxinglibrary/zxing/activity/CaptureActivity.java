@@ -27,6 +27,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ import com.google.zxing.qrcode.QRCodeReader;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 
 /**
@@ -78,6 +80,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
     public static final int RESULT_CODE_QR_SCAN = 0xA1;
     public static final String INTENT_EXTRA_KEY_QR_SCAN = "qr_scan_result";
     private int REQUEST_CODE_ASK_PERMISSIONS  = 1;
+    private Button lighter;
 
     /**
      * Called when the activity is first created.
@@ -97,12 +100,11 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
                 finish();
             }
         });
-
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
 
         //添加toolbar
-//        addToolbar();
+        addToolbar();
     }
 
 
@@ -114,7 +116,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
                     new AlertDialog.Builder(CaptureActivity.this)
                             .setMessage("有权限未被允许使用，可在安全中心-权限管理中打开权限")
                             .setCancelable(false)
-                            .setPositiveButton("退出简图", new DialogInterface.OnClickListener() {
+                            .setPositiveButton("退出扫描", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     finish();
@@ -130,14 +132,18 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
 
     private void addToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        ImageView more = (ImageView) findViewById(R.id.scanner_toolbar_more);
-//        assert more != null;
-//        more.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        ImageView more = (ImageView) findViewById(R.id.scanner_toolbar_more);
+        assert more != null;
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //打开手机中的相册
+                Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT); //"android.intent.action.GET_CONTENT"
+                innerIntent.setType("image/*");
+                Intent wrapperIntent = Intent.createChooser(innerIntent, "选择二维码图片");
+                CaptureActivity.this.startActivityForResult(wrapperIntent, REQUEST_CODE_SCAN_GALLERY);
+            }
+        });
         setSupportActionBar(toolbar);
     }
 
@@ -163,7 +169,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
 
     @Override
     protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
-        if (requestCode==RESULT_OK) {
+        if (resultCode==RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_SCAN_GALLERY:
                     //获取选中图片的路径
@@ -182,24 +188,24 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
                         @Override
                         public void run() {
                             Result result = scanningImage(photo_path);
+                            mProgress.dismiss();
                             if (result != null) {
-//                                Message m = handler.obtainMessage();
-//                                m.what = R.id.decode_succeeded;
-//                                m.obj = result.getText();
-//                                handler.sendMessage(m);
+
                                 Intent resultIntent = new Intent();
                                 Bundle bundle = new Bundle();
                                 bundle.putString(INTENT_EXTRA_KEY_QR_SCAN ,result.getText());
-//                                Logger.d("saomiao",result.getText());
 //                                bundle.putParcelable("bitmap",result.get);
                                 resultIntent.putExtras(bundle);
                                 CaptureActivity.this.setResult(RESULT_CODE_QR_SCAN, resultIntent);
+                                finish();
 
                             } else {
-                                Message m = handler.obtainMessage();
-                                m.what = R.id.decode_failed;
-                                m.obj = "Scan failed!";
-                                handler.sendMessage(m);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(CaptureActivity.this,"二维码识别异常！",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                     }).start();
@@ -328,8 +334,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
             return;
         }
         if (handler == null) {
-            handler = new CaptureActivityHandler(this, decodeFormats,
-                    characterSet);
+            handler = new CaptureActivityHandler(this, decodeFormats, characterSet);
         }
     }
 

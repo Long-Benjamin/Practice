@@ -229,12 +229,12 @@ public final class CameraManager {
 
       if(height >= width) { //竖屏
         height  = width;
-      } else { //黑屏
+      } else { //横屏
         width = height;
       }
 
       int leftOffset = (screenResolution.x - width) / 2;
-      int topOffset = (screenResolution.y - height) / 2;
+      int topOffset = (screenResolution.y - height) / 3;
       framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
 
     }

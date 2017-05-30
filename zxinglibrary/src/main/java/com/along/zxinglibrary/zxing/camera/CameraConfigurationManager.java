@@ -16,7 +16,7 @@
 
 package com.along.zxinglibrary.zxing.camera;
 
-import android.app.Activity;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Point;
 import android.hardware.Camera;
@@ -89,8 +89,8 @@ final class CameraConfigurationManager {
     setZoom(parameters);
     //setSharpness(parameters);
     //modify here
-//    setCameraDisplayOrientation((Activity) context,previewFormat ,camera);
-    camera.setDisplayOrientation(90);
+    setCameraDisplayOrientation(context, 0, camera);
+//    camera.setDisplayOrientation(90);
     camera.setParameters(parameters);
   }
 
@@ -196,7 +196,7 @@ final class CameraConfigurationManager {
   }
 
   private void setFlash(Camera.Parameters parameters) {
-    // FIME: This is a hack to turn the flash off on the Samsung Galaxy.
+    // FIXME: This is a hack to turn the flash off on the Samsung Galaxy.
     // And this is a hack-hack to work around a different value on the Behold II
     // Restrict Behold II check to Cupcake, per Samsung's advice
     //if (Build.MODEL.contains("Behold II") &&
@@ -278,16 +278,28 @@ final class CameraConfigurationManager {
 		return DESIRED_SHARPNESS;
 	}
 
-  public static void setCameraDisplayOrientation(Activity activity, int cameraId, android.hardware.Camera camera) {
-    android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
-    android.hardware.Camera.getCameraInfo(cameraId, info);
-    int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+  @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+  public static void setCameraDisplayOrientation(Context context,
+                                                 int cameraId, Camera camera) {
+    Camera.CameraInfo info = new Camera.CameraInfo();
+    Camera.getCameraInfo(cameraId, info);
+    // int rotation = c.getWindowManager().getDefaultDisplay().getRotation();
+    WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    int rotation = windowManager.getDefaultDisplay().getRotation();
     int degrees = 0;
     switch (rotation) {
-      case Surface.ROTATION_0: degrees = 0; break;
-      case Surface.ROTATION_90: degrees = 90; break;
-      case Surface.ROTATION_180: degrees = 180; break;
-      case Surface.ROTATION_270: degrees = 270; break;
+      case Surface.ROTATION_0:
+        degrees = 0;
+        break;
+      case Surface.ROTATION_90:
+        degrees = 90;
+        break;
+      case Surface.ROTATION_180:
+        degrees = 180;
+        break;
+      case Surface.ROTATION_270:
+        degrees = 270;
+        break;
     }
 
     int result;

@@ -90,4 +90,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile project(':zxinglibrary')
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    compile 'com.ashokvarma.android:bottom-navigation-bar:1.4.3'
+
 }
