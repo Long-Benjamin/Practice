@@ -47,6 +47,7 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -190,12 +191,19 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
                             Result result = scanningImage(photo_path);
                             mProgress.dismiss();
                             if (result != null) {
+                                byte[] bitmapByte = new byte[0];
+                                if (scanBitmap != null){
+                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                    scanBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                                    bitmapByte = baos.toByteArray();
+                                }
 
                                 Intent resultIntent = new Intent();
                                 Bundle bundle = new Bundle();
                                 bundle.putString(INTENT_EXTRA_KEY_QR_SCAN ,result.getText());
 //                                bundle.putParcelable("bitmap",result.get);
                                 resultIntent.putExtras(bundle);
+                                resultIntent.putExtra("bitmap",bitmapByte);
                                 CaptureActivity.this.setResult(RESULT_CODE_QR_SCAN, resultIntent);
                                 finish();
 
@@ -312,6 +320,10 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
         if (TextUtils.isEmpty(resultString)) {
             Toast.makeText(CaptureActivity.this, "Scan failed!", Toast.LENGTH_SHORT).show();
         } else {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            barcode.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte [] bitmapByte =baos.toByteArray();
+
             Intent resultIntent = new Intent();
             Bundle bundle = new Bundle();
             bundle.putString(INTENT_EXTRA_KEY_QR_SCAN, resultString);
@@ -319,6 +331,7 @@ public class CaptureActivity extends AppCompatActivity implements Callback {
             // 不能使用Intent传递大于40kb的bitmap，可以使用一个单例对象存储这个bitmap
 //            bundle.putParcelable("bitmap", barcode);
 //            Logger.d("saomiao",resultString);
+            resultIntent.putExtra("bitmap", bitmapByte);
             resultIntent.putExtras(bundle);
             this.setResult(RESULT_CODE_QR_SCAN, resultIntent);
         }
