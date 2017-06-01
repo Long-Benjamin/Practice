@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.along.practice.Manager.ActivitiesManager;
+import com.along.practice.R;
 import com.along.practice.utils.LogUtil;
 import com.along.practice.utils.SpUtil;
 import com.along.practice.utils.StatusBarUtil;
@@ -48,6 +49,8 @@ public abstract class BaseActivity extends SwipeBackActivity {
     private void init(Bundle savedInstanceState) {
         setTheme(ThemeUtil.themeArr[SpUtil.getThemeIndex(this)][
                 SpUtil.getNightModel(this) ? 1 : 0]);
+        StatusBarUtil.setColor(this,SpUtil.getNightModel(this) ?
+                getResources().getColor(R.color.colorPrimaryDark ):   getResources().getColor(R.color.colorPrimary));
 
         this.setContentView(this.getLayoutId());
         binder = ButterKnife.bind(this);
