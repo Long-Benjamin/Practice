@@ -17,4 +17,9 @@ public class C {
 
     }
 
+    public static class Base{
+        public static final int PAGE_SIZE = 20;
+
+    }
+
 }

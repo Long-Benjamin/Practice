@@ -16,11 +16,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.along.practice.R;
+import com.along.practice.activity.adapter.MeiZhiAdapter;
+import com.along.practice.bean.GankBean;
+import com.along.practice.bean.MeizhiBean;
+import com.along.practice.http.RequestApi;
 import com.along.practice.module.base.BaseActivity;
+import com.along.practice.utils.LogUtil;
 import com.along.practice.utils.SpUtil;
+import com.along.practice.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends BaseActivity {
 
@@ -31,6 +44,10 @@ public class MainActivity extends BaseActivity {
     FloatingActionButton fab;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    public List<MeizhiBean> mMeiZhies = new ArrayList<>();
+    private int mPage = 1;
+    private MeiZhiAdapter mMeiZhiAdapter;
 
 
     @Override
@@ -51,41 +68,14 @@ public class MainActivity extends BaseActivity {
                     SpUtil.setNightModel(mContext, true);
                 }
                 MainActivity.this.reload();
+
             }
         });
+        RequestApi.getMeizhiList(mPage).subscribe(mOberver);
 
-
+        mMeiZhiAdapter = new MeiZhiAdapter(MainActivity.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new RecyclerView.Adapter<MyViewHolder>() {
-            @Override
-            public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                MyViewHolder holder = new MyViewHolder(LayoutInflater.from(MainActivity.this)
-                        .inflate(R.layout.recycle_item_card, parent, false));
-                return holder;
-
-            }
-
-            @Override
-            public void onBindViewHolder(MyViewHolder holder, int position) {
-                holder.tv.setText("成鱼落雁，毕业绣花+" + position);
-                Glide.with(MainActivity.this)
-                        .load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1494940207647&di=a73f40055eab87352c66d56854d38304&imgtype=0&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F72f082025aafa40fe871b36bad64034f79f019d4.jpg")
-                        .centerCrop()
-                        .error(R.mipmap.ic_launcher)
-                        .into(holder.imgview);
-                holder.cardview.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(MainActivity.this, NomalActivity.class));
-                    }
-                });
-            }
-
-            @Override
-            public int getItemCount() {
-                return 10;
-            }
-        });
+        recyclerView.setAdapter(mMeiZhiAdapter);
     }
 
     @Override
@@ -94,19 +84,35 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    Observer<GankBean> mOberver = new Observer<GankBean>() {
+        @Override
+        public void onSubscribe(@NonNull Disposable d) {
 
-        TextView tv;
-        ImageView imgview;
-        CardView cardview;
-
-        public MyViewHolder(View view)
-        {
-            super(view);
-            tv = (TextView) view.findViewById(R.id.name);
-            imgview = (ImageView) view.findViewById(R.id.image_view);
-            cardview = (CardView) view.findViewById(R.id.card_view);
         }
 
-    }
+        @Override
+        public void onNext(@NonNull GankBean gankBean) {
+            LogUtil.error("請求下來了"+gankBean.results.size()+"個妹子");
+            if (gankBean != null && gankBean.results.size() > 0){
+                if (mPage == 1)mMeiZhiAdapter.cleanMeiZhies();
+                mMeiZhies.addAll(gankBean.results);
+                mMeiZhiAdapter.addMeiZhies(mMeiZhies);
+                mMeiZhiAdapter.notifyDataSetChanged();
+
+            }else {
+                ToastUtils.showToast(MainActivity.this,"1没有妹纸了！");
+            }
+
+        }
+
+        @Override
+        public void onError(@NonNull Throwable e) {
+            ToastUtils.showToast(MainActivity.this,"2没有妹纸了！");
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    };
 }
