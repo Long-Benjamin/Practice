@@ -12,10 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.along.practice.R;
-import com.along.practice.activity.MainActivity;
-import com.along.practice.activity.NomalActivity;
 import com.along.practice.bean.MeizhiBean;
-import com.bumptech.glide.Glide;
+import com.along.practice.common.C;
+import com.along.practice.utils.display.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +28,21 @@ public    class MeiZhiAdapter extends Adapter<MeiZhiAdapter.MyViewHolder>{
 
     private Context mCont;
     public List<MeizhiBean> mMeiZhies = new ArrayList<>();
+    private OnItemClickListener mOnItemClickListener;
+    private OnItemLongClickListener mOnItemLongClickListener;
 
     public MeiZhiAdapter (Context pCont){
 
         this.mCont = pCont;
     }
 
+    public ArrayList<String> getUrls() {
+        ArrayList<String> vUrls = new ArrayList<>();
+        for (MeizhiBean mz : mMeiZhies){
+            vUrls.add(mz.url);
+        }
+        return vUrls;
+    }
 
     @Override
     public MeiZhiAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,16 +53,16 @@ public    class MeiZhiAdapter extends Adapter<MeiZhiAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.tv.setText("成鱼落雁，毕业绣花(" + mMeiZhies.get(position).createdAt+")");
-        Glide.with(mCont)
-                .load(mMeiZhies.get(position).url)
-                .centerCrop()
-                .error(R.mipmap.ic_launcher)
-                .into(holder.imgview);
+
+        holder.tv.setText(mMeiZhies.get(position).createdAt +"");
+        ImageLoader.getInstance().displayImage(mCont,mMeiZhies.get(position).url,holder.imgview);
+
         holder.cardview.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCont.startActivity(new Intent(mCont, NomalActivity.class));
+
+                mOnItemClickListener.onItemClick(view,position );
+
             }
         });
     }
@@ -88,4 +96,24 @@ public    class MeiZhiAdapter extends Adapter<MeiZhiAdapter.MyViewHolder>{
         }
 
     }
+
+    /**
+     * 点击事件的接口回掉方法
+     */
+    public interface OnItemClickListener{
+        void onItemClick(View view,int position);
+    }
+
+    public interface OnItemLongClickListener{
+        void onItemLongClick(View view,int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener){
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener mOnItemLongClickListener) {
+        this.mOnItemLongClickListener = mOnItemLongClickListener;
+    }
+
 }

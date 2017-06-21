@@ -37,4 +37,6 @@ public class MeizhiBean {
     public Date publishedAt;
     public int imageWidth;
     public int imageHeight;
+
+
 }

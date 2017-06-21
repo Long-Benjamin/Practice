@@ -11,11 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.along.practice.Manager.ActivitiesManager;
-import com.along.practice.R;
 import com.along.practice.utils.LogUtil;
-import com.along.practice.utils.SpUtil;
-import com.along.practice.utils.StatusBarUtil;
-import com.along.practice.utils.ThemeUtil;
 import com.along.practice.utils.ToastUtils;
 import com.along.practice.widget.swipbacklayout.SwipeBackActivity;
 import com.along.practice.widget.swipbacklayout.SwipeBackLayout;
@@ -38,24 +34,17 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
         TAG = getClass().getSimpleName();
 
-        //设置状态栏透明
-//        StatusBarUtil.setTransparent(this);
-//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         init(savedInstanceState);
 
         LogUtil.e(TAG,"onCreate()");
     }
 
     private void init(Bundle savedInstanceState) {
-        setTheme(ThemeUtil.themeArr[SpUtil.getThemeIndex(this)][
-                SpUtil.getNightModel(this) ? 1 : 0]);
-        StatusBarUtil.setColor(this,SpUtil.getNightModel(this) ?
-                getResources().getColor(R.color.colorPrimaryDark ):   getResources().getColor(R.color.colorPrimary));
 
         this.setContentView(this.getLayoutId());
         binder = ButterKnife.bind(this);
         mContext = this;
-
+        initNavigationBar();
         setSwipeBackEnable(isOpen());
         getSwipeBackLayout().setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 

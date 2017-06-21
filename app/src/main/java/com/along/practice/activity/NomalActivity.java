@@ -111,7 +111,7 @@ public class NomalActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000 && resultCode == RESULT_CODE_QR_SCAN){
             String code = data.getExtras().getString(INTENT_EXTRA_KEY_QR_SCAN);
-            mTVcode.setText("扫描内容："+code);
+            mTVcode.setText("扫描结果："+code);
              byte[] bis = data.getByteArrayExtra("bitmap");
             if (bis.length > 0){
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bis, 0, bis.length);

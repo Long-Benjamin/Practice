@@ -4,7 +4,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="color_refresf_1">#e71010</color>
+    <color name="color_refresf_2">#06cc3e</color>
+    <color name="color_refresf_3">#fd7c36</color>
+    <color name="color_refresf_4">#2aadfe</color>
+
     <color name="black_overlay">#66000000</color>
+    <color name="common_RecyBg">#eceaea</color>
     <color name="common_white">#FFFFFF</color>
     <color name="common_transparent">#00FFFFFF</color>
     <color name="common_transparent_22">#22000000</color>

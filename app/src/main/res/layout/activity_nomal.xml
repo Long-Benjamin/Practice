@@ -47,7 +47,7 @@
                 android:id="@+id/text_input_key"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:hint="任意字符(右下角[完成]生成二维码)"
+                android:hint="请输入待生成二维码："
                 android:inputType="text"
                 android:textColor="@color/black_overlay" />
 
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:text="带logo二维码" />
+                    android:text="普通二维码" />
 
                 <ImageView
                     android:id="@+id/image_view"
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:text="普通二维码" />
+                    android:text="带logo二维码"/>
 
                 <ImageView
                     android:id="@+id/image_view2"
@@ -107,29 +107,30 @@
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/tv_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="二维码扫描结果"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/imgview_qrcode"
-            android:layout_gravity="center"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:background="@color/list_divider_light" />
-
         <Button
             android:id="@+id/scan_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="扫一扫" />
+
+        <ImageView
+            android:id="@+id/imgview_qrcode"
+            android:layout_gravity="center"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/list_divider_light" />
+
+        <TextView
+            android:id="@+id/tv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:text="二维码扫描结果"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
