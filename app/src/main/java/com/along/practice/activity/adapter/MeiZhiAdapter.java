@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.along.practice.R;
+import com.along.practice.activity.NomalActivity;
 import com.along.practice.bean.MeizhiBean;
 import com.along.practice.common.C;
 import com.along.practice.utils.display.ImageLoader;
@@ -61,7 +62,8 @@ public    class MeiZhiAdapter extends Adapter<MeiZhiAdapter.MyViewHolder>{
             @Override
             public void onClick(View view) {
 
-                mOnItemClickListener.onItemClick(view,position );
+                mCont.startActivity(new Intent(mCont, NomalActivity.class));
+//                mOnItemClickListener.onItemClick(view,position );
 
             }
         });
