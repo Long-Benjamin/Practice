@@ -1,7 +1,6 @@
 package com.along.practice.http;
 
 import com.along.practice.bean.GankBean;
-import com.along.practice.bean.User;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

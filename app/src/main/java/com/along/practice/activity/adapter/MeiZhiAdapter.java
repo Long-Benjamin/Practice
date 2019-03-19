@@ -62,8 +62,7 @@ public    class MeiZhiAdapter extends Adapter<MeiZhiAdapter.MyViewHolder>{
             @Override
             public void onClick(View view) {
 
-                mCont.startActivity(new Intent(mCont, NomalActivity.class));
-//                mOnItemClickListener.onItemClick(view,position );
+                mOnItemClickListener.onItemClick(view,position );
 
             }
         });

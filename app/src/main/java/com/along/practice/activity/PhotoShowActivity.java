@@ -3,7 +3,6 @@ package com.along.practice.activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.annotation.MainThread;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.along.practice.R;
 import com.along.practice.activity.adapter.ViewPagerAdapter;
 import com.along.practice.common.C;
@@ -21,20 +19,11 @@ import com.along.practice.module.base.BaseActivity;
 import com.along.practice.utils.display.ImageLoader;
 import com.along.practice.widget.MZViewPager;
 import com.along.practice.widget.SmoothImageView;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import uk.co.senab.photoview.PhotoView;
 
 /**
  *  This is a activity for picture show,

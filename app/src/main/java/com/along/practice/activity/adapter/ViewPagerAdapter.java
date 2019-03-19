@@ -1,9 +1,7 @@
 package com.along.practice.activity.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.support.v4.view.PagerAdapter;
@@ -12,17 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.along.practice.activity.NomalActivity;
 import com.along.practice.utils.display.ImageLoader;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-
-import uk.co.senab.photoview.PhotoView;
 
 /**
  * Created by ljt on 2016/11/30.

@@ -2,26 +2,21 @@ package com.along.practice.module.Splash;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Bundle;
-import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.along.practice.R;
 import com.along.practice.activity.MainActivity;
 import com.along.practice.module.base.BaseActivity;
-import com.qiushui.blurredview.BlurredView;
-
-import java.util.Random;
 
 import butterknife.BindView;
 
 public class SplashActivity extends BaseActivity implements ISplashView {
 
     @BindView(R.id.splash_imgview)
-    BlurredView mImgView;
+    ImageView mImgView;
     @BindView(R.id.copy_textview)
     TextView mCopyrightTV;
 
@@ -53,7 +48,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
 
     @Override
     public void showImage(Drawable drawable) {
-        mImgView.setBlurredImg(drawable);
+        mImgView.setImageDrawable(drawable);
 
     }
 
@@ -64,7 +59,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
 
     @Override
     public void setImageAlpha(int alpha) {
-        mImgView.setBlurredLevel(alpha);
+//        mImgView.setBlurredLevel(alpha);
     }
 
     @Override

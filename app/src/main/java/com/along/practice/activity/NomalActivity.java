@@ -1,5 +1,6 @@
 package com.along.practice.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -17,11 +18,14 @@ import android.widget.TextView;
 import com.along.practice.R;
 import com.along.practice.module.base.BaseActivity;
 import com.along.practice.utils.StatusBarUtil;
+import com.along.practice.utils.ToastUtils;
 import com.along.zxinglibrary.utils.QRCodeUtil;
 import com.along.zxinglibrary.zxing.activity.CaptureActivity;
 import com.along.zxinglibrary.zxing.encoding.EncodingHandler;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 import static com.along.zxinglibrary.zxing.activity.CaptureActivity.INTENT_EXTRA_KEY_QR_SCAN;
 import static com.along.zxinglibrary.zxing.activity.CaptureActivity.RESULT_CODE_QR_SCAN;
@@ -98,12 +102,20 @@ public class NomalActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mBTscan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(NomalActivity.this, CaptureActivity.class), 1000);
-            }
-        });
+
+        mBTscan.setOnClickListener(v ->
+
+                new RxPermissions(NomalActivity.this)
+                .request(Manifest.permission.CAMERA)
+                .subscribe(aBoolean -> {
+
+                    if (aBoolean) {
+                        startActivityForResult(new Intent(NomalActivity.this, CaptureActivity.class), 1000);
+
+                    }  else {
+                        ToastUtils.showToast(NomalActivity.this,"不给摄像权限，我怎么帮你识别二维码呢！");
+                    }
+                }));
     }
 
     @Override

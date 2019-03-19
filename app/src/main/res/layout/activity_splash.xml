@@ -6,9 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.along.practice.module.Splash.SplashActivity">
 
-    <com.qiushui.blurredview.BlurredView
+    <ImageView
         android:id="@+id/splash_imgview"
-        app:disableBlurred="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="8dp" />

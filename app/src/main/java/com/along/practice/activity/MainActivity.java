@@ -166,6 +166,9 @@ public class MainActivity extends BaseActivity implements MeiZhiAdapter.OnItemCl
 
     @Override
     public void onItemClick(View view, int position) {
+
+//        startActivity(new Intent(MainActivity.this, NomalActivity.class));
+
         Intent vIntent = new Intent(MainActivity.this, PhotoShowActivity.class);
         vIntent.putExtra(C.Intents.PHOTO_POSITION, position);
         vIntent.putStringArrayListExtra(C.Intents.PHOTO_LIST,  mMeiZhiAdapter.getUrls());
